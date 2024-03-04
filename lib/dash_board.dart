@@ -4,12 +4,10 @@ import 'package:pdf_maker/mobile.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
 import 'dart:typed_data';
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:url_launcher/url_launcher.dart';
-import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
-
-import 'mobile.dart' if (dart.library.html) 'web.dart';
 
 class DashBoard extends StatefulWidget {
+  const DashBoard({super.key});
+
   @override
   State<DashBoard> createState() => _DashBoardState();
 }
@@ -43,7 +41,7 @@ class _DashBoardState extends State<DashBoard> {
       appBar: appBar(),
       drawer: SafeArea(
         child: SizedBox(
-          height: MediaQuery.of(context).size.height * 0.75,
+          height: MediaQuery.of(context).size.height * 0.80,
           width: MediaQuery.of(context).size.width * 0.75,
           child: const DrawerMenu(),
         ),
@@ -52,8 +50,8 @@ class _DashBoardState extends State<DashBoard> {
     );
   }
 
-  FutureBuilder<List<int>> textFildForm() {
-    return FutureBuilder<List<int>>(
+  FutureBuilder<void> textFildForm() {
+    return FutureBuilder<void>(
         future: isGeneratingPDF ? _createPDF() : null,
         builder: (context, snapshot) {
           return Scaffold(
@@ -101,159 +99,79 @@ class _DashBoardState extends State<DashBoard> {
                           const SizedBox(
                             height: 16,
                           ),
-                          textFormField('Semester2'),
-                          const SizedBox(
-                            height: 16,
-                          ),
-                          TextFormField(
-                            controller: idTEController,
-                            keyboardType: TextInputType.text,
-                            decoration: textFieldDecoration('Student ID'),
-                            validator: (String? value) {
-                              if (value?.trim().isEmpty ?? true) {
-                                return 'Enter Your Student ID';
-                              } else {
-                                return null;
-                              }
-                            },
+                          textFormField(
+                            'Semester',
+                            semesterTEController,
                           ),
                           const SizedBox(
                             height: 16,
                           ),
-                          TextFormField(
-                            controller: nameTEController,
-                            keyboardType: TextInputType.text,
-                            decoration: textFieldDecoration('Student Name'),
-                            validator: (String? value) {
-                              if (value?.trim().isEmpty ?? true) {
-                                return 'Enter Your Name';
-                              } else {
-                                return null;
-                              }
-                            },
+                          textFormField(
+                            'Student ID',
+                            idTEController,
                           ),
                           const SizedBox(
                             height: 16,
                           ),
-                          TextFormField(
-                            controller: batchTEController,
-                            keyboardType: TextInputType.text,
-                            decoration: textFieldDecoration('Batch'),
-                            validator: (String? value) {
-                              if (value?.trim().isEmpty ?? true) {
-                                return 'Enter Your Batch';
-                              } else {
-                                return null;
-                              }
-                            },
+                          textFormField(
+                            'Student Name',
+                            nameTEController,
                           ),
                           const SizedBox(
                             height: 16,
                           ),
-                          TextFormField(
-                            controller: sectionTEController,
-                            keyboardType: TextInputType.text,
-                            decoration: textFieldDecoration('Section'),
-                            validator: (String? value) {
-                              if (value?.trim().isEmpty ?? true) {
-                                return 'Enter Your Section';
-                              } else {
-                                return null;
-                              }
-                            },
+                          textFormField(
+                            'Batch',
+                            batchTEController,
                           ),
                           const SizedBox(
                             height: 16,
                           ),
-                          TextFormField(
-                            controller: courseCodeTEController,
-                            keyboardType: TextInputType.text,
-                            decoration: textFieldDecoration('Course Code'),
-                            validator: (String? value) {
-                              if (value?.trim().isEmpty ?? true) {
-                                return 'Enter Your Course Code';
-                              } else {
-                                return null;
-                              }
-                            },
+                          textFormField(
+                            'Section',
+                            sectionTEController,
                           ),
                           const SizedBox(
                             height: 16,
                           ),
-                          TextFormField(
-                            controller: courseNameTEController,
-                            keyboardType: TextInputType.text,
-                            decoration: textFieldDecoration('Course Name'),
-                            validator: (String? value) {
-                              if (value?.trim().isEmpty ?? true) {
-                                return 'Enter Your Course Name';
-                              } else {
-                                return null;
-                              }
-                            },
+                          textFormField(
+                            'Course Code',
+                            courseCodeTEController,
                           ),
                           const SizedBox(
                             height: 16,
                           ),
-                          TextFormField(
-                            controller: teacherNameTEController,
-                            keyboardType: TextInputType.text,
-                            decoration:
-                                textFieldDecoration('Course Teacher Name'),
-                            validator: (String? value) {
-                              if (value?.trim().isEmpty ?? true) {
-                                return 'Enter Course Teacher Name';
-                              } else {
-                                return null;
-                              }
-                            },
+                          textFormField(
+                            'Course Name',
+                            courseNameTEController,
                           ),
                           const SizedBox(
                             height: 16,
                           ),
-                          TextFormField(
-                            controller: teacherDesignationTEController,
-                            keyboardType: TextInputType.text,
-                            decoration: textFieldDecoration(
-                                'Course Teacher Designation'),
-                            validator: (String? value) {
-                              if (value?.trim().isEmpty ?? true) {
-                                return 'Enter Course Teacher Designation';
-                              } else {
-                                return null;
-                              }
-                            },
+                          textFormField(
+                            'Course Teacher Name',
+                            teacherNameTEController,
                           ),
                           const SizedBox(
                             height: 16,
                           ),
-                          TextFormField(
-                            controller: teacherDepartmentTEController,
-                            keyboardType: TextInputType.text,
-                            decoration: textFieldDecoration(
-                                'Course Teacher Department'),
-                            validator: (String? value) {
-                              if (value?.trim().isEmpty ?? true) {
-                                return 'Enter Course Teacher Department';
-                              } else {
-                                return null;
-                              }
-                            },
+                          textFormField(
+                            'Course Teacher Designation',
+                            teacherDesignationTEController,
                           ),
                           const SizedBox(
                             height: 16,
                           ),
-                          TextFormField(
-                            controller: dateTEController,
-                            keyboardType: TextInputType.text,
-                            decoration: textFieldDecoration('Submission Date'),
-                            validator: (String? value) {
-                              if (value?.trim().isEmpty ?? true) {
-                                return 'Enter Submission Date';
-                              } else {
-                                return null;
-                              }
-                            },
+                          textFormField(
+                            'Course Teacher Department',
+                            teacherDepartmentTEController,
+                          ),
+                          const SizedBox(
+                            height: 16,
+                          ),
+                          textFormField(
+                            'Submission Date',
+                            dateTEController,
                           ),
                           const SizedBox(
                             height: 16,
@@ -304,9 +222,9 @@ class _DashBoardState extends State<DashBoard> {
         });
   }
 
-  TextFormField textFormField(String name) {
+  TextFormField textFormField(String name, controller) {
     return TextFormField(
-      controller: semesterTEController,
+      controller: controller,
       keyboardType: TextInputType.text,
       decoration: textFieldDecoration(name),
       validator: (String? value) {
@@ -356,7 +274,7 @@ class _DashBoardState extends State<DashBoard> {
     );
   }
 
-  Future<List<int>> _createPDF() async {
+  Future<void> _createPDF() async {
     setState(() {
       isGeneratingPDF = true;
     });
@@ -367,11 +285,6 @@ class _DashBoardState extends State<DashBoard> {
       PdfBitmap(await _readImageData('image.png')),
       const Rect.fromLTWH(110, 15, 300, 100),
     );
-
-    // 'Normal Course Assignment Report',
-    //                     'Lab/Project Assignment Report',
-    //                     'Lab/Project Report',
-    //                     'Lab Project Final Report',
 
     if (selectedOption == 'Lab/Project Assignment Report') {
       marksImg = 'marks_distribution/lab_project_assignment.png';
@@ -451,13 +364,11 @@ class _DashBoardState extends State<DashBoard> {
     List<int> bytes = document.saveSync();
     document.dispose();
 
-    // saveAndLaunchFile(bytes, 'Output.pdf');
+    saveAndLaunchFile(bytes, 'Output.pdf');
 
     setState(() {
       isGeneratingPDF = false;
     });
-
-    return bytes;
   }
 }
 

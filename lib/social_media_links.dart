@@ -29,7 +29,7 @@ class SocialMediaLinks extends StatelessWidget {
               child: const CircleAvatar(
                 foregroundImage:
                     AssetImage('assets/images/linkedin.png'),
-                radius: 20,
+                radius: 25,
               ),
             ),
             const SizedBox(
@@ -44,7 +44,7 @@ class SocialMediaLinks extends StatelessWidget {
               },
               child: const CircleAvatar(
                 foregroundImage: AssetImage('assets/images/github.png'),
-                radius: 20,
+                radius: 25,
               ),
             ),
             const SizedBox(
@@ -62,7 +62,7 @@ class SocialMediaLinks extends StatelessWidget {
               },
               child: const CircleAvatar(
                 foregroundImage: AssetImage('assets/images/gmail.png'),
-                radius: 20,
+                radius: 25,
               ),
             ),
           ],
