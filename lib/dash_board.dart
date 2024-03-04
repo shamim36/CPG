@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pdf_maker/drawer_menu.dart';
 import 'package:pdf_maker/mobile.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
 import 'dart:typed_data';
 import 'package:flutter/services.dart' show rootBundle;
@@ -34,6 +35,12 @@ class _DashBoardState extends State<DashBoard> {
   bool isGeneratingPDF = false;
 
   @override
+  void initState() {
+    super.initState();
+    _loadSavedData();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 149, 158, 167),
@@ -48,6 +55,44 @@ class _DashBoardState extends State<DashBoard> {
       ),
       body: textFildForm(),
     );
+  }
+
+  _loadSavedData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    setState(() {
+      selectedOption = prefs.getString('selectedOption') ?? 'Select Cover Page';
+      semesterTEController.text = prefs.getString('semester') ?? '';
+      idTEController.text = prefs.getString('studentID') ?? '';
+      nameTEController.text = prefs.getString('studentName') ?? '';
+      batchTEController.text = prefs.getString('batch') ?? '';
+      sectionTEController.text = prefs.getString('section') ?? '';
+      courseCodeTEController.text = prefs.getString('courseCode') ?? '';
+      courseNameTEController.text = prefs.getString('courseName') ?? '';
+      teacherNameTEController.text = prefs.getString('teacherName') ?? '';
+      teacherDepartmentTEController.text =
+          prefs.getString('teacherDepartment') ?? '';
+      teacherDesignationTEController.text =
+          prefs.getString('teacherDesignation') ?? '';
+      dateTEController.text = prefs.getString('submissionDate') ?? '';
+    });
+  }
+
+  _saveData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    prefs.setString('selectedOption', selectedOption);
+    prefs.setString('semester', semesterTEController.text);
+    prefs.setString('studentID', idTEController.text);
+    prefs.setString('studentName', nameTEController.text);
+    prefs.setString('batch', batchTEController.text);
+    prefs.setString('section', sectionTEController.text);
+    prefs.setString('courseCode', courseCodeTEController.text);
+    prefs.setString('courseName', courseNameTEController.text);
+    prefs.setString('teacherName', teacherNameTEController.text);
+    prefs.setString('teacherDepartment', teacherDepartmentTEController.text);
+    prefs.setString('teacherDesignation', teacherDesignationTEController.text);
+    prefs.setString('submissionDate', dateTEController.text);
   }
 
   FutureBuilder<void> textFildForm() {
@@ -276,6 +321,7 @@ class _DashBoardState extends State<DashBoard> {
 
   Future<void> _createPDF() async {
     setState(() {
+      _saveData();
       isGeneratingPDF = true;
     });
     PdfDocument document = PdfDocument();
